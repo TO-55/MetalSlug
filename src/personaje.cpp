@@ -8,18 +8,28 @@ int main()
     int fuerzaSalto = 400; // Fuerza del impulso para el salto
     float ajusteAltura = 25.0f; // Ajuste de altura para alinear el sprite con el cuerpo dinámico
 
-    sf::RenderWindow ventana(sf::VideoMode(800, 600), "Ejemplo de Física con Box2D y SFML");
-
+    sf::RenderWindow ventana(sf::VideoMode(2022, 275), "Ejemplo de Física con Box2D y SFML");
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    // Cargar la imagen desde un archivo
+    sf::Texture texture;
+    if (!texture.loadFromFile("./assets/images/MSbackground.png"))
+    {
+        // Manejar el error si no se puede cargar la imagen
+        return -1;
+    }
+    // Crear un sprite y asignarle la textura
+    sf::Sprite sprite(texture);
+    ///////////////////////////////////////////////////////////////////////////////////////////////
     b2Vec2 vectorGravedad(0.0f, 10.0f);
     b2World mundo(vectorGravedad);
 
     // Crear un suelo estático
     b2BodyDef cuerpoSueloDef;
-    cuerpoSueloDef.position.Set(400, 500.0f); // Posición del centro del suelo
+    cuerpoSueloDef.position.Set(0,275.0f); // Posición del centro del suelo
     b2Body* cuerpoSuelo = mundo.CreateBody(&cuerpoSueloDef);
 
     b2PolygonShape formaSuelo;
-    int boxWidth = 600; // 600 pixeles de ancho
+    int boxWidth = 4044; // 600 pixeles de ancho
     int boxHeight = 10; // 10 pixeles de alto
     formaSuelo.SetAsBox(boxWidth / 2.0f, boxHeight / 2.0f);
 
@@ -31,7 +41,7 @@ int main()
     // Crear un cuerpo dinámico
     b2BodyDef cuerpoBolaDef;
     cuerpoBolaDef.type = b2_dynamicBody;
-    float yPosicionBola = 500.0f - (25.0f * 2 + boxHeight); // Ajustar posición y
+    float yPosicionBola = 200.0f - (25.0f * 2 + boxHeight); // Ajustar posición y
     cuerpoBolaDef.position.Set(400.0f, yPosicionBola);
     b2Body* cuerpoBola = mundo.CreateBody(&cuerpoBolaDef);
 
@@ -43,7 +53,7 @@ int main()
     fixtureBolaDef.density = 0.01f;
     fixtureBolaDef.friction = 0.1f; // Reduce la fricción para facilitar el movimiento
     cuerpoBola->CreateFixture(&fixtureBolaDef);
-
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Cargar la textura del sprite
     sf::Texture texturaBola;
     if (!texturaBola.loadFromFile("assets/images/Pikachu_MS2.png")) {
@@ -123,8 +133,8 @@ int main()
         ventana.draw(suelo);
 
         // Dibujar el sprite de la bola
-        ventana.draw(spriteBola);
-
+        ventana.draw(sprite);
+        ventana.draw(spriteBola); 
         // Mostrar la ventana
         ventana.display();
     }
