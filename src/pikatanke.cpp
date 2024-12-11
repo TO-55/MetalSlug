@@ -1,7 +1,7 @@
 #include "PikaTanke.hpp"
 
 CuerpoDinamico::CuerpoDinamico(b2World& mundo, float posX, float posY, float radio, const std::string& texturaPath) {
-    // Configurar el cuerpo dinámico
+    // Configurar el cuerpo dinamico
     b2BodyDef cuerpoDef;
     cuerpoDef.type = b2_dynamicBody;
     cuerpoDef.position.Set(posX, posY);
@@ -24,8 +24,8 @@ CuerpoDinamico::CuerpoDinamico(b2World& mundo, float posX, float posY, float rad
 
     // Crear el sprite y asignarle la textura
     sprite.setTexture(textura);
-    sprite.setOrigin(textura.getSize().x / 2.0f, textura.getSize().y);
-    sprite.setScale(0.3f, 0.3f);
+    sprite.setOrigin(textura.getSize().x / 2.0f, textura.getSize().y); // Ajustar el origen para alinearlo al suelo
+    sprite.setScale(0.2f, 0.2f); // Establecer la escala del sprite a (0.2, 0.2)
 }
 
 void CuerpoDinamico::aplicarFuerza(float fuerzaX, float fuerzaY) {
@@ -44,24 +44,33 @@ b2Body* CuerpoDinamico::obtenerCuerpo() {
     return cuerpo;
 }
 
-void CuerpoDinamico::controlarMovimiento(float fuerza, float fuerzaSalto, bool& enElSuelo, bool& mirandoALaDerecha, float ajusteAltura) {
+void CuerpoDinamico::controlarMovimiento(float fuerza, float fuerzaSalto, bool& enElSuelo, bool& mirandoALaDerecha, float ajusteAltura, float limiteIzquierda, float limiteDerecha) {
+    float escala = 1.0f; // Define la escala adecuada según tu configuración
+    bool moviendose = false; // Variable para verificar si el personaje se está moviendo
+
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
         aplicarFuerza(-fuerza, 0);
+        moviendose = true;
         if (mirandoALaDerecha) {
-            sprite.setScale(-0.3f, 0.3f);
+            sprite.setScale(-0.2f, 0.2f); // Asegurarse de que la escala se ajusta correctamente al cambiar de dirección
             mirandoALaDerecha = false;
         }
     } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
         aplicarFuerza(fuerza, 0);
+        moviendose = true;
         if (!mirandoALaDerecha) {
-            sprite.setScale(0.3f, 0.3f);
+            sprite.setScale(0.2f, 0.2f); // Asegurarse de que la escala se ajusta correctamente al cambiar de dirección
             mirandoALaDerecha = true;
         }
-    } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up) && enElSuelo) {
+    }
+
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up) && enElSuelo) {
         aplicarFuerza(0, -fuerzaSalto);
-        enElSuelo = false; // Evitar saltos múltiples
-    } else {
-        // Detener la velocidad horizontal del cuerpo cuando no se presiona ninguna tecla de movimiento
+        enElSuelo = false;
+    }
+
+    // Detener la velocidad horizontal del cuerpo cuando no se presiona ninguna tecla de movimiento
+    if (!moviendose) {
         b2Vec2 velocidadActual = cuerpo->GetLinearVelocity();
         cuerpo->SetLinearVelocity(b2Vec2(0, velocidadActual.y));
     }

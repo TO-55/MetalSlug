@@ -1,5 +1,5 @@
-#ifndef CUERPO_DINAMICO_HPP
-#define CUERPO_DINAMICO_HPP
+#ifndef PIKATANKE_HPP
+#define PIKATANKE_HPP
 
 #include <SFML/Graphics.hpp>
 #include <box2d/box2d.h>
@@ -12,7 +12,7 @@ public:
     void actualizarSprite(float ajusteAltura);
     sf::Sprite& obtenerSprite();
     b2Body* obtenerCuerpo();
-    void controlarMovimiento(float fuerza, float fuerzaSalto, bool& enElSuelo, bool& mirandoALaDerecha, float ajusteAltura);
+    void controlarMovimiento(float fuerza, float fuerzaSalto, bool& enElSuelo, bool& mirandoALaDerecha, float ajusteAltura, float limiteIzquierda, float limiteDerecha);
 
 private:
     b2Body* cuerpo;
@@ -20,4 +20,4 @@ private:
     sf::Sprite sprite;
 };
 
-#endif // CUERPO_DINAMICO_HPP
+#endif // PIKATANKE_HPP

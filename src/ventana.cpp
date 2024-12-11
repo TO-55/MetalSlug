@@ -1,4 +1,4 @@
-#include "Ventana.hpp"
+#include "ventana.hpp"
 #include <iostream>
 
 Ventana::Ventana(int width, int height, const std::string& title) :
@@ -12,6 +12,8 @@ void Ventana::cargarTextura(const std::string& filepath) {
         exit(-1);
     }
     spriteFondo.setTexture(texture);
+
+    // Quitar el ajuste de escala para mantener el tamaño original del fondo
 }
 
 void Ventana::dibujarFondo() {
@@ -31,10 +33,18 @@ void Ventana::actualizar() {
     }
 }
 
+void Ventana::mostrar() {
+    window.display();
+}
+
 bool Ventana::estaAbierta() const {
     return window.isOpen();
 }
 
-void Ventana::mostrar() {
-    window.display();
+sf::RenderWindow& Ventana::obtenerVentana() {
+    return window;
+}
+
+const sf::Sprite& Ventana::obtenerFondo() const {
+    return spriteFondo;
 }

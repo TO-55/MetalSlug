@@ -11,9 +11,10 @@ public:
     void dibujarFondo();
     void dibujarSprite(const sf::Sprite& sprite);
     void actualizar();
-    bool estaAbierta() const;
     void mostrar();
-
+    bool estaAbierta() const;
+    sf::RenderWindow& obtenerVentana();
+    const sf::Sprite& obtenerFondo() const; // Añadir este método
 
 private:
     sf::RenderWindow window;
