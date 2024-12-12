@@ -5,6 +5,7 @@
 #include "ventana.cpp"
 #include "suelo.cpp"
 #include "camara.cpp"
+#include "proyectil.cpp"
 
 int main()
 {
@@ -67,11 +68,13 @@ int main()
 
         // Actualizar el mundo de Box2D
         mundo.Step(1.0f / 60.0f, 6, 2);
+        cuerpoBola.actualizarProyectiles();
 
         // Limpiar la ventana y dibujar el fondo y los sprites
         ventana.dibujarFondo();
         suelo.dibujar(ventana.obtenerVentana());
         ventana.dibujarSprite(cuerpoBola.obtenerSprite());
+        cuerpoBola.dibujarProyectiles(ventana.obtenerVentana());
 
         // Mostrar todo en la ventana
         ventana.mostrar();

@@ -44,6 +44,52 @@ b2Body* CuerpoDinamico::obtenerCuerpo() {
     return cuerpo;
 }
 
+void CuerpoDinamico::dibujarProyectiles(sf::RenderWindow& ventana){
+    for (auto& proyectil : proyectiles) {
+        ventana.draw(proyectil);
+    }
+}
+
+void CuerpoDinamico::disparar() {
+    if(relojDisparo.getElapsedTime().asSeconds() >= tiempoEntreDisparos){
+    // Get the character's current position
+    float posX = sprite.getPosition().x;
+    float posY = sprite.getPosition().y;
+    
+    // Create the projectile
+    sf::CircleShape proyectil(5.f);
+    proyectil.setFillColor(sf::Color::Yellow);
+    proyectil.setOrigin(5.f,5.f);
+    proyectil.setPosition(posX,posY);
+
+    //set the projectile velocity
+    float velocidadProyectil = 10.f;
+    sf::Vector2f veloidad(mirandoALaDerecha ? velocidadProyectil : -velocidadProyectil, 0.f);
+
+    //Store projectiles and velocity
+    proyectiles.push_back(proyectil);
+    velocidadesProyectiles.push_back(veloidad);
+    
+    //Reset Cooldown
+    relojDisparo.restart();
+    }
+}
+
+void CuerpoDinamico::actualizarProyectiles() {
+    for (size_t i = 0; i < proyectiles.size();) {
+        proyectiles[i].move(velocidadesProyectiles[i]);
+        sf::Vector2f pos = proyectiles[i].getPosition();
+
+        if (pos.x < 0 || pos.x > 800 || pos.y < 0 || pos.y > 600) {
+            proyectiles.erase(proyectiles.begin() + i);
+            velocidadesProyectiles.erase(velocidadesProyectiles.begin() + i);
+        } else {
+            i++;
+        }
+    }
+}
+
+
 void CuerpoDinamico::controlarMovimiento(float fuerza, float fuerzaSalto, bool& enElSuelo, bool& mirandoALaDerecha, float ajusteAltura, float limiteIzquierda, float limiteDerecha) {
     float escala = 1.0f; // Define la escala adecuada según tu configuración
     bool moviendose = false; // Variable para verificar si el personaje se está moviendo
@@ -67,6 +113,10 @@ void CuerpoDinamico::controlarMovimiento(float fuerza, float fuerzaSalto, bool& 
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up) && enElSuelo) {
         aplicarFuerza(0, -fuerzaSalto);
         enElSuelo = false;
+    }
+
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)){
+        disparar();
     }
 
     // Detener la velocidad horizontal del cuerpo cuando no se presiona ninguna tecla de movimiento
