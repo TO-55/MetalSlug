@@ -32,7 +32,10 @@ A continuacion se listan las dependencias necesarias para correr el juego. En ca
 ## Ejecutar juegos
 Para poder ejecutar el juego siga los siguientes pasos
 - Instalar todas las dependencias descritas anteriormente
-- En la terminal de VS Code, ingresar el comando make run con el nombre del archivo del juego, para este caso ingresar: make runmundo
+- En la terminal de VS Code, ingresar el comando make run con el nombre del archivo del juego, para este caso ingresar: make runmundo-
+![alt text](Pikachu_MS2.png)
+
+
 
 #### LICENCIA
 El siguiente codigo es un proyecto homenaje al videojuego Metal Slug y Pókemon, por lo que por ningun motivo se busca lucrar o generar ingresos con el codigo. El fin del codigo es meramente educacional y de entretenimiento. 
