@@ -1,4 +1,4 @@
 # MetalSlug
-como ejecutar el juego
+#¿Como ejecutar el juego?
 
 jejeje prueba de comit
