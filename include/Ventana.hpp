@@ -7,13 +7,13 @@
 class Ventana {
 public:
     Ventana(int width, int height, const std::string& title);
+    float getDeltaTime() {return deltaTime;}
     void cargarTextura(const std::string& filepath);
     void dibujarFondo();
     void dibujarSprite(const sf::Sprite& sprite);
     void actualizar();
     void mostrar();
     bool estaAbierta() const;
-    float getDeltaTime();
     sf::RenderWindow& obtenerVentana();
     const sf::Sprite& obtenerFondo() const; // Añadir este método
 
@@ -22,7 +22,6 @@ private:
     sf::Texture texture;
     sf::Sprite spriteFondo;
     sf::Clock gameClock;
-    sf::Time timePerFrame;
     float deltaTime;
 };
 

@@ -29,26 +29,6 @@ void Camara::moverDerecha() {
     }
 }
 
-void Camara::moverArriba() {
-    if (vista.getCenter().y - vista.getSize().y / 2 > limites.top) {
-        vista.move(0, -velocidad);
-        // Asegurarse de no pasar el límite superior
-        if (vista.getCenter().y - vista.getSize().y / 2 < limites.top) {
-            vista.setCenter(vista.getCenter().x, limites.top + vista.getSize().y / 2);
-        }
-    }
-}
-
-void Camara::moverAbajo() {
-    if (vista.getCenter().y + vista.getSize().y / 2 < limites.top + limites.height) {
-        vista.move(0, velocidad);
-        // Asegurarse de no pasar el límite inferior
-        if (vista.getCenter().y + vista.getSize().y / 2 > limites.top + limites.height) {
-            vista.setCenter(vista.getCenter().x, limites.top + limites.height - vista.getSize().y / 2);
-        }
-    }
-}
-
 sf::View& Camara::obtenerVista() {
     return vista;
 }

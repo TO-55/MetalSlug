@@ -3,7 +3,7 @@
 #include <iostream>
 
 Personaje::Personaje(const std::string& texturaPath, float posX, float posY, float limiteIzq, float limiteDer, float scaleX, float scaleY)
-    : x1(limiteIzq), x2(limiteDer), velocidad(0.5f, 0.f), tiempoEspera(sf::seconds(0.5f)), moviendoDerecha(true), enEspera(false) {
+    : x1(limiteIzq), x2(limiteDer), velocidad(2.f, 0.f), tiempoEspera(sf::seconds(0.5f)), moviendoDerecha(true), enEspera(false) {
 
     if (!textura.loadFromFile(texturaPath)) {
         std::cerr << "Error al cargar la textura" << std::endl;

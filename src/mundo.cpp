@@ -10,8 +10,8 @@
 
 int main()
 {
-    int fuerza = 5; // Incrementa este valor para mayor facilidad de desplazamiento
-    int fuerzaSalto = 400; // Fuerza del impulso para el salto
+    int fuerza = 5000; // Incrementa este valor para mayor facilidad de desplazamiento
+    long long int fuerzaSalto = 4000000; // Fuerza del impulso para el salto
     float ajusteAltura = 25.0f; // Ajuste de altura para alinear el sprite con el cuerpo dinamico
 
     // Crear una ventana con tamaño 600x275
@@ -20,7 +20,7 @@ int main()
     // Cargar la textura del sprite de fondo
     ventana.cargarTextura("assets/images/MSbackground.png");
 
-    b2Vec2 vectorGravedad(0.0f, 10.0f);
+    b2Vec2 vectorGravedad(0.0f, 100.0f);
     b2World mundo(vectorGravedad);
 
     // Crear el cuerpo dinamico usando la clase CuerpoDinamico
@@ -33,7 +33,7 @@ int main()
     Camara camara(ventana.obtenerVentana(), 5.0f, ventana.obtenerFondo());
 
     // Crear a Meowth
-    //Personaje meowth("assets/images/MeowthMS.png", 400.f, 200.f, 200.f, 600.f, 0.2f, 0.2f);
+    Personaje meowth("assets/images/MeowthMS.png", 400.f, 220.f, 500.f, 650.f, 0.2f, 0.2f);
 
     // Variables para la logica del juego
     bool enElSuelo = false;
@@ -69,14 +69,14 @@ int main()
 
         cuerpoBola.actualizarProyectiles();
 
-        //meowth.actualizar();
+        meowth.actualizar();
 
         // Limpiar la ventana y dibujar el fondo y los sprites
         ventana.dibujarFondo();
         suelo.dibujar(ventana.obtenerVentana());
         ventana.dibujarSprite(cuerpoBola.obtenerSprite());
         cuerpoBola.dibujarProyectiles(ventana.obtenerVentana());
-        //meowth.dibujar(ventana.obtenerVentana());
+        meowth.dibujar(ventana.obtenerVentana());
 
         // Mostrar todo en la ventana
         ventana.mostrar();

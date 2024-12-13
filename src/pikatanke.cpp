@@ -12,8 +12,9 @@ CuerpoDinamico::CuerpoDinamico(b2World& mundo, float posX, float posY, float rad
 
     b2FixtureDef fixtureDef;
     fixtureDef.shape = &forma;
-    fixtureDef.density = 0.01f;
-    fixtureDef.friction = 0.1f;
+    fixtureDef.density = 1.0f;
+    fixtureDef.friction = 0.3f;
+    fixtureDef.restitution = 0.0f;
     cuerpo->CreateFixture(&fixtureDef);
 
     // Cargar la textura del sprite
@@ -145,7 +146,7 @@ void CuerpoDinamico::checkProjectileCollisions(sf::FloatRect targetBounds) {
 
 
 void CuerpoDinamico::controlarMovimiento(float fuerza, float fuerzaSalto, bool& enElSuelo, bool& mirandoALaDerecha, float ajusteAltura, float limiteIzquierda, float limiteDerecha) {
-    float escala = 1.0f; // Define la escala adecuada según tu configuración
+    float escala = 2.0f; // Define la escala adecuada según tu configuración
     bool moviendose = false; // Variable para verificar si el personaje se está moviendo
 
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
