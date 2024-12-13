@@ -1,41 +1,46 @@
 # POKESLUG
-El pryecto POKESLUG esta desarrollado sobre MingW64 utilizanod Msys2 y como editor se esta usando Visual Studio Code
+The POKESLUG project is developed on MingW64 using Msys2 and Visual Studio Code is used as the editor.
 
-## Dependencias necesarias
+## Necessary Dependencies
 
-A continuacion se listan las dependencias necesarias para correr el juego. En caso de no contar con alguna, es necesario instalarlas.
+The following dependencies are necessary to run the game. If you don't have any of them, you need to install them.
 
-- ### Programas
-    Se requieren los siguientes programas
+- ### Programs
+    The following programs are required:
     
-    - Visual Studio Code https://code.visualstudio.com/
+    - Visual Studio Code [https://code.visualstudio.com/](https://code.visualstudio.com/)
     - Msys2 (Windows) 
-    https://github.com/msys2/msys2-installer/releases/download/2023-05-26/msys2-x86_64-20230526.exe 
+    [https://github.com/msys2/msys2-installer/releases/download/2023-05-26/msys2-x86_64-20230526.exe](https://github.com/msys2/msys2-installer/releases/download/2023-05-26/msys2-x86_64-20230526.exe)
 
-    No modificar ningua opcion al momento de intalacion o podrian variar las configuraciones. Una vez instalado es necesario agregar los siguientes directorios al path de windows y reiniciar.
+    Do not modify any option during installation or the configurations may vary. Once installed, it is necessary to add the following directories to the Windows path and restart.
 
         C:\msys64\mingw64\bin
 
         C:\msys64\usr\bin
 
-    - Github Desktop https://desktop.github.com/
-    - Git https://git-scm.com/
-- ### Librerias
-    Las siguientes librerias deben de instalarse en la terminal de Msys2
-    - DevTools https://code.visualstudio.com/docs/cpp/config-mingw
-            pacman -S --needed base-devel mingw-w64-x86_64-toolchain
-    - SFML https://packages.msys2.org/package/mingw-w64-x86_64-sfml
-            pacman -S mingw-w64-x86_64-sfml
-    - Box2D simulaciones de fisica https://box2d.org/documentation/ https://packages.msys2.org/package/mingw-w64-x86_64-box2d?repo=mingw64
-            pacman -S mingw-w64-x86_64-box2d
+    - Github Desktop [https://desktop.github.com/](https://desktop.github.com/)
+    - Git [https://git-scm.com/](https://git-scm.com/)
 
-## Ejecutar juegos
-Para poder ejecutar el juego siga los siguientes pasos
-- Instalar todas las dependencias descritas anteriormente
-- En la terminal de VS Code, ingresar el comando make run con el nombre del archivo del juego, para este caso ingresar: make runmundo-
+- ### Libraries
+    The following libraries must be installed in the Msys2 terminal:
+    - DevTools [https://code.visualstudio.com/docs/cpp/config-mingw](https://code.visualstudio.com/docs/cpp/config-mingw)
+        ```sh
+        pacman -S --needed base-devel mingw-w64-x86_64-toolchain
+        ```
+    - SFML [https://packages.msys2.org/package/mingw-w64-x86_64-sfml](https://packages.msys2.org/package/mingw-w64-x86_64-sfml)
+        ```sh
+        pacman -S mingw-w64-x86_64-sfml
+        ```
+    - Box2D for physics simulations [https://box2d.org/documentation/](https://box2d.org/documentation/) [https://packages.msys2.org/package/mingw-w64-x86_64-box2d?repo=mingw64](https://packages.msys2.org/package/mingw-w64-x86_64-box2d?repo=mingw64)
+        ```sh
+        pacman -S mingw-w64-x86_64-box2d
+        ```
+
+## Run Games
+To be able to run the game, follow these steps:
+- Install all the dependencies described above.
+- In the VS Code terminal, enter the `make run` command with the name of the game file, in this case, enter: `make runmundo-`
 ![alt text](Pikachu_MS2.png)
 
-
-
-#### LICENCIA
-El siguiente codigo es un proyecto homenaje al videojuego Metal Slug y Pókemon, por lo que por ningun motivo se busca lucrar o generar ingresos con el codigo. El fin del codigo es meramente educacional y de entretenimiento. 
+#### LICENSE
+The following code is a tribute project to the video game Metal Slug and Pokémon, and by no means seeks to profit or generate income from the code. The purpose of the code is purely educational and for entertainment.
