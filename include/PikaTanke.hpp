@@ -30,6 +30,8 @@ private:
     float tiempoEntreDisparos = 0.5f; //segundos entre disparos
     sf::Clock relojDisparo;
     bool mirandoALaDerecha = true;
+    sf::Clock relojProyectil;
+    float tiempoEntreFrames = 60.f;
 };
 
 #endif // PIKATANKE_HPP

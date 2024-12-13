@@ -2,7 +2,7 @@
 
 // Constructor que inicializa el proyectil con la posición y velocidad
 Proyectil::Proyectil(float x, float y, float velocidad) {
-    this->shape.setSize(sf::Vector2f(10.f, 5.f));  // Tamaño del proyectil
+    this->shape.setRadius(5.f);  // Tamaño del proyectil
     this->shape.setPosition(x, y);                  // Posición inicial
     this->shape.setFillColor(sf::Color::Red);       // Color del proyectil
     this->shape.setOrigin(5.f, 2.5f);

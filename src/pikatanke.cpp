@@ -53,22 +53,34 @@ void CuerpoDinamico::dibujarProyectiles(sf::RenderWindow& ventana){
 void CuerpoDinamico::disparar() {
     if(relojDisparo.getElapsedTime().asSeconds() >= tiempoEntreDisparos){
     // Get the character's current position
-    float posX = sprite.getPosition().x;
-    float posY = sprite.getPosition().y;
+
+     float posX = cuerpo->GetPosition().x;
+        float posY = cuerpo->GetPosition().y;
+
+        float offsetY = 30.0f;
+        posY = posY - offsetY;
+
+        float offsetX = 20.0f;
+        if(mirandoALaDerecha){
+        posX += offsetX;
+        }else{
+        posX -= offsetX;
+        }
     
+
     // Create the projectile
     sf::CircleShape proyectil(5.f);
     proyectil.setFillColor(sf::Color::Yellow);
     proyectil.setOrigin(5.f,5.f);
-    proyectil.setPosition(posX,posY);
+    proyectil.setPosition(posX, posY);
 
     //set the projectile velocity
-    float velocidadProyectil = 10.f;
-    sf::Vector2f veloidad(mirandoALaDerecha ? velocidadProyectil : -velocidadProyectil, 0.f);
+    float velocidadProyectil = 800.f;
+    sf::Vector2f velocidad(mirandoALaDerecha ? velocidadProyectil : -velocidadProyectil, 0.f);
 
     //Store projectiles and velocity
     proyectiles.push_back(proyectil);
-    velocidadesProyectiles.push_back(veloidad);
+    velocidadesProyectiles.push_back(velocidad);
     
     //Reset Cooldown
     relojDisparo.restart();
@@ -76,18 +88,23 @@ void CuerpoDinamico::disparar() {
 }
 
 void CuerpoDinamico::actualizarProyectiles() {
+    float deltaTime = relojProyectil.restart().asSeconds();
+    
     for (size_t i = 0; i < proyectiles.size();) {
-        proyectiles[i].move(velocidadesProyectiles[i]);
+        proyectiles[i].move(velocidadesProyectiles[i]); 
+
         sf::Vector2f pos = proyectiles[i].getPosition();
 
-        if (pos.x < 0 || pos.x > 800 || pos.y < 0 || pos.y > 600) {
+        if (pos.x < 0 || pos.x > 800) {
             proyectiles.erase(proyectiles.begin() + i);
             velocidadesProyectiles.erase(velocidadesProyectiles.begin() + i);
         } else {
             i++;
         }
     }
-}
+    relojProyectil.restart();
+ }
+
 
 
 void CuerpoDinamico::controlarMovimiento(float fuerza, float fuerzaSalto, bool& enElSuelo, bool& mirandoALaDerecha, float ajusteAltura, float limiteIzquierda, float limiteDerecha) {

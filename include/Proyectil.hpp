@@ -12,6 +12,8 @@ public:
     // Método para mover el proyectil
     void mover();
 
+    void actualizar();
+
     // Método para dibujar el proyectil
     void dibujar(sf::RenderWindow& ventana);
 
@@ -33,7 +35,7 @@ public:
 
 private:
     bool activo = true;
-    sf::RectangleShape shape; // Forma del proyectil
+    sf::CircleShape shape; // Forma del proyectil
     float velocidad; // Velocidad del proyectil
 };
 

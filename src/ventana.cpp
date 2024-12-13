@@ -1,9 +1,15 @@
-#include "ventana.hpp"
+#include "Ventana.hpp"
 #include <iostream>
 
 Ventana::Ventana(int width, int height, const std::string& title) :
     window(sf::VideoMode(width, height), title)
-{
+    deltaTime(0.0f);
+    {
+    timePerFrame = sf::seconds(1.f / 60.f);
+}
+
+float Ventana::getDeltaTime(){
+    return gameClock.restart().asSeconds();
 }
 
 void Ventana::cargarTextura(const std::string& filepath) {
@@ -31,7 +37,9 @@ void Ventana::actualizar() {
         if (event.type == sf::Event::Closed)
             window.close();
     }
+    deltaTime = getDeltaTime();
 }
+
 
 void Ventana::mostrar() {
     window.display();

@@ -6,6 +6,7 @@
 #include "suelo.cpp"
 #include "camara.cpp"
 #include "proyectil.cpp"
+#include "meowth.cpp"
 
 int main()
 {
@@ -31,6 +32,9 @@ int main()
     // Crear la camara usando la clase Camara con el sprite de fondo
     Camara camara(ventana.obtenerVentana(), 5.0f, ventana.obtenerFondo());
 
+    // Crear a Meowth
+    //Personaje meowth("assets/images/MeowthMS.png", 400.f, 200.f, 200.f, 600.f, 0.2f, 0.2f);
+
     // Variables para la logica del juego
     bool enElSuelo = false;
     bool mirandoALaDerecha = true;
@@ -52,12 +56,6 @@ int main()
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
             camara.moverDerecha();
         }
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
-            camara.moverArriba();
-        }
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
-            camara.moverAbajo();
-        }
 
         // Actualizar la vista de la ventana
         camara.actualizar();
@@ -68,13 +66,17 @@ int main()
 
         // Actualizar el mundo de Box2D
         mundo.Step(1.0f / 60.0f, 6, 2);
+
         cuerpoBola.actualizarProyectiles();
+
+        //meowth.actualizar();
 
         // Limpiar la ventana y dibujar el fondo y los sprites
         ventana.dibujarFondo();
         suelo.dibujar(ventana.obtenerVentana());
         ventana.dibujarSprite(cuerpoBola.obtenerSprite());
         cuerpoBola.dibujarProyectiles(ventana.obtenerVentana());
+        //meowth.dibujar(ventana.obtenerVentana());
 
         // Mostrar todo en la ventana
         ventana.mostrar();

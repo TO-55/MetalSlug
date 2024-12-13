@@ -13,6 +13,7 @@ public:
     void actualizar();
     void mostrar();
     bool estaAbierta() const;
+    float getDeltaTime();
     sf::RenderWindow& obtenerVentana();
     const sf::Sprite& obtenerFondo() const; // Añadir este método
 
@@ -20,6 +21,9 @@ private:
     sf::RenderWindow window;
     sf::Texture texture;
     sf::Sprite spriteFondo;
+    sf::Clock gameClock;
+    sf::Time timePerFrame;
+    float deltaTime;
 };
 
 #endif // VENTANA_HPP
