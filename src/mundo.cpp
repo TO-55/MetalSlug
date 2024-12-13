@@ -7,6 +7,9 @@
 #include "camara.cpp"
 #include "proyectil.cpp"
 #include "meowth.cpp"
+#include "charizardd.cpp"
+#include "target.cpp"
+#include "blastoise.cpp"
 
 int main()
 {
@@ -24,7 +27,7 @@ int main()
     b2World mundo(vectorGravedad);
 
     // Crear el cuerpo dinamico usando la clase CuerpoDinamico
-    CuerpoDinamico cuerpoBola(mundo, 400.0f, 200.0f - (25.0f * 2 + 10.0f), 25.0f, "assets/images/Pikachu_MS2.png");
+    CuerpoDinamico cuerpoBola(mundo, 100.0f, 270.0f - (25.0f * 2 + 10.0f), 25.0f, "assets/images/Pikachu_MS2.png");
 
     // Crear el suelo usando la clase Suelo
     Suelo suelo(mundo, 0, 275.0f, 4300.0f, 10.0f);
@@ -32,8 +35,12 @@ int main()
     // Crear la camara usando la clase Camara con el sprite de fondo
     Camara camara(ventana.obtenerVentana(), 5.0f, ventana.obtenerFondo());
 
-    // Crear a Meowth
-    Personaje meowth("assets/images/MeowthMS.png", 400.f, 220.f, 500.f, 650.f, 0.2f, 0.2f);
+    // Crear Personajes
+    Personaje meowth("assets/images/MeowthMS.png", 300.f, 220.f, 300.f, 450.f, 0.2f, 0.2f);
+
+    Lagarto charizard("assets/images/CharizardMS.png",600.f, 200.f, 0.f, 0.f, 0.3f, 0.3f);
+
+    Blastoise blastoise("assets/images/Blastoise_MS2.png", 800.f, 185.f, 900.f, 1150.f, .4f, .4f);
 
     // Variables para la logica del juego
     bool enElSuelo = false;
@@ -70,6 +77,8 @@ int main()
         cuerpoBola.actualizarProyectiles();
 
         meowth.actualizar();
+        charizard.actualizar();
+        blastoise.actualizar();
 
         // Limpiar la ventana y dibujar el fondo y los sprites
         ventana.dibujarFondo();
@@ -77,6 +86,8 @@ int main()
         ventana.dibujarSprite(cuerpoBola.obtenerSprite());
         cuerpoBola.dibujarProyectiles(ventana.obtenerVentana());
         meowth.dibujar(ventana.obtenerVentana());
+        charizard.dibujar(ventana.obtenerVentana());
+        blastoise.dibujar(ventana.obtenerVentana());
 
         // Mostrar todo en la ventana
         ventana.mostrar();

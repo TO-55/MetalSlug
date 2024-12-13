@@ -1,4 +1,5 @@
 #include "PikaTanke.hpp"
+#include "Target.hpp"
 
 CuerpoDinamico::CuerpoDinamico(b2World& mundo, float posX, float posY, float radio, const std::string& texturaPath) {
     // Configurar el cuerpo dinamico
@@ -118,22 +119,22 @@ void CuerpoDinamico::dibujarProyectiles(sf::RenderWindow& ventana) {
     }
 }
 
-void CuerpoDinamico::checkProjectileCollisions(sf::FloatRect targetBounds) {
+void CuerpoDinamico::checkProjectileCollisions(Target& target) {
+    if (!target.isAlive()) {
+        return; // Skip collision check if target is already dead
+    }
+
     for (size_t i = 0; i < proyectiles.size();) {
-        if (proyectiles[i].shape.getGlobalBounds().intersects(targetBounds)) {
-            // Handle collision based on projectile type
-            switch(proyectiles[i].type) {
-                case EXPLOSIVE:
-                    // Add explosion effect here
-                    std::cout << "Explosive hit! Damage: " << proyectiles[i].damage << std::endl;
-                    break;
-                case RAPID:
-                    std::cout << "Rapid hit! Damage: " << proyectiles[i].damage << std::endl;
-                    break;
-                case NORMAL:
-                default:
-                    std::cout << "Normal hit! Damage: " << proyectiles[i].damage << std::endl;
-                    break;
+        if (proyectiles[i].shape.getGlobalBounds().intersects(target.getBounds())) {
+            if (proyectiles[i].type == NORMAL) {
+                target.takeDamage();
+                
+                // Check if target should be destroyed
+                if (!target.isAlive()) {
+                    // Handle target destruction here
+                    // For example: target.destroy();
+                    std::cout << "Target destroyed!" << std::endl;
+                }
             }
             
             // Remove the projectile after collision
@@ -143,6 +144,7 @@ void CuerpoDinamico::checkProjectileCollisions(sf::FloatRect targetBounds) {
         }
     }
 }
+
 
 
 void CuerpoDinamico::controlarMovimiento(float fuerza, float fuerzaSalto, bool& enElSuelo, bool& mirandoALaDerecha, float ajusteAltura, float limiteIzquierda, float limiteDerecha) {

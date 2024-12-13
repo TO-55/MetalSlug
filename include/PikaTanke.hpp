@@ -4,6 +4,8 @@
 #include <SFML/Graphics.hpp>
 #include <box2d/box2d.h>
 #include <iostream>
+#include <vector>
+#include <Target.hpp>
 
 enum ProjectileType {
     NORMAL,
@@ -31,7 +33,7 @@ public:
     void disparar(ProjectileType tipo = NORMAL);
     void actualizarProyectiles();
     void dibujarProyectiles(sf::RenderWindow& ventana);
-    void checkProjectileCollisions(sf::FloatRect targetBounds); // For enemy collision
+    void checkProjectileCollisions(Target& target); // For enemy collision
 
 private:
     b2Body* cuerpo;
@@ -40,7 +42,7 @@ private:
 
     std::vector<Projectile> proyectiles;
     int frameSinceLastShot = 0;
-    const int framesPerShot = 15;
+    const int framesPerShot = 10;
     bool mirandoALaDerecha = true;
 };
 

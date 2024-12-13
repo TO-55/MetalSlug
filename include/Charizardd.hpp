@@ -1,12 +1,12 @@
-#ifndef PERSONAJE_HPP
-#define PERSONAJE_HPP
+#ifndef CHARIZARD_HPP
+#define CHARIZARD_HPP
 
 #include <SFML/Graphics.hpp>
 #include <SFML/System/Clock.hpp>
 
-class Personaje {
+class Lagarto {
 public:
-    Personaje(const std::string& texturaPath, float posX, float posY, float limiteIzq, float limiteDer, float scaleX, float scaleY);
+    Lagarto(const std::string& texturaPath, float posX, float posY, float limiteSup, float limiteInf, float scaleX, float scaleY);
     void actualizar(); // Actualiza el estado del personaje
     void dibujar(sf::RenderWindow& ventana); // Dibuja el personaje en la ventana
     bool estaVivo() const {return health > 0;}
@@ -19,8 +19,8 @@ private:
     sf::Sprite sprite; // Sprite del personaje
     sf::Texture textura; // Textura asociada al sprite
 
-    float x1; // Límite izquierdo de movimiento
-    float x2; // Límite derecho de movimiento
+    float y1 = 275; // Límite inferior de movimiento
+    float y2; // Límite superior de movimiento
     sf::Vector2f velocidad; // Velocidad de movimiento
     sf::Clock relojEspera; // Reloj para manejar tiempos de espera
     sf::Time tiempoEspera; // Duración del tiempo de espera
@@ -30,4 +30,4 @@ private:
     void manejarEspera(); // Maneja el tiempo de espera
 };
 
-#endif // PERSONAJE_HPP
+#endif // CHARIZARD_HPP

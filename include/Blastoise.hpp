@@ -1,12 +1,12 @@
-#ifndef PERSONAJE_HPP
-#define PERSONAJE_HPP
+#ifndef BLASTOISE_HPP
+#define BLASTOISE_HPP
 
 #include <SFML/Graphics.hpp>
 #include <SFML/System/Clock.hpp>
 
-class Personaje {
+class Blastoise {
 public:
-    Personaje(const std::string& texturaPath, float posX, float posY, float limiteIzq, float limiteDer, float scaleX, float scaleY);
+    Blastoise(const std::string& texturaPath, float posX, float posY, float limiteIz, float limiteDe, float scaleX, float scaleY);
     void actualizar(); // Actualiza el estado del personaje
     void dibujar(sf::RenderWindow& ventana); // Dibuja el personaje en la ventana
     bool estaVivo() const {return health > 0;}
@@ -30,4 +30,4 @@ private:
     void manejarEspera(); // Maneja el tiempo de espera
 };
 
-#endif // PERSONAJE_HPP
+#endif // BLASTOISE_HPP
