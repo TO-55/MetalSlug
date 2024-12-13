@@ -44,67 +44,104 @@ b2Body* CuerpoDinamico::obtenerCuerpo() {
     return cuerpo;
 }
 
-void CuerpoDinamico::dibujarProyectiles(sf::RenderWindow& ventana){
-    for (auto& proyectil : proyectiles) {
-        ventana.draw(proyectil);
-    }
-}
-
-void CuerpoDinamico::disparar() {
-    if(relojDisparo.getElapsedTime().asSeconds() >= tiempoEntreDisparos){
-    // Get the character's current position
-
-     float posX = cuerpo->GetPosition().x;
+void CuerpoDinamico::disparar(ProjectileType tipo) {
+    if(frameSinceLastShot >= framesPerShot) {
+        // Get the character's current position
+        float posX = cuerpo->GetPosition().x;
         float posY = cuerpo->GetPosition().y;
 
+        // Adjust projectile spawn position
         float offsetY = 30.0f;
-        posY = posY - offsetY;
-
         float offsetX = 20.0f;
-        if(mirandoALaDerecha){
-        posX += offsetX;
-        }else{
-        posX -= offsetX;
+        posY = posY - offsetY;
+        posX += mirandoALaDerecha ? offsetX : -offsetX;
+
+        // Create the projectile
+        Projectile proyectil;
+        proyectil.shape.setRadius(5.f);
+        proyectil.shape.setOrigin(5.f, 5.f);
+        proyectil.shape.setPosition(posX, posY);
+        proyectil.type = tipo;
+
+        // Set projectile properties based on type
+        switch(tipo) {
+            case NORMAL:
+                proyectil.velocity = sf::Vector2f(mirandoALaDerecha ? 15.0f : -15.0f, 0.0f);
+                proyectil.damage = 10.0f;
+                proyectil.shape.setFillColor(sf::Color::Yellow);
+                break;
+            case EXPLOSIVE:
+                proyectil.velocity = sf::Vector2f(mirandoALaDerecha ? 10.0f : -10.0f, 0.0f);
+                proyectil.damage = 25.0f;
+                proyectil.shape.setFillColor(sf::Color::Red);
+                break;
+            case RAPID:
+                proyectil.velocity = sf::Vector2f(mirandoALaDerecha ? 25.0f : -25.0f, 0.0f);
+                proyectil.damage = 5.0f;
+                proyectil.shape.setFillColor(sf::Color::Blue);
+                break;
         }
-    
 
-    // Create the projectile
-    sf::CircleShape proyectil(5.f);
-    proyectil.setFillColor(sf::Color::Yellow);
-    proyectil.setOrigin(5.f,5.f);
-    proyectil.setPosition(posX, posY);
-
-    //set the projectile velocity
-    float velocidadProyectil = 800.f;
-    sf::Vector2f velocidad(mirandoALaDerecha ? velocidadProyectil : -velocidadProyectil, 0.f);
-
-    //Store projectiles and velocity
-    proyectiles.push_back(proyectil);
-    velocidadesProyectiles.push_back(velocidad);
-    
-    //Reset Cooldown
-    relojDisparo.restart();
+        // Store projectile
+        proyectiles.push_back(proyectil);
+        
+        frameSinceLastShot = 0;
     }
 }
 
 void CuerpoDinamico::actualizarProyectiles() {
-    float deltaTime = relojProyectil.restart().asSeconds();
+    frameSinceLastShot++;
     
     for (size_t i = 0; i < proyectiles.size();) {
-        proyectiles[i].move(velocidadesProyectiles[i]); 
+        // Move projectile
+        proyectiles[i].shape.move(proyectiles[i].velocity);
+        sf::Vector2f pos = proyectiles[i].shape.getPosition();
 
-        sf::Vector2f pos = proyectiles[i].getPosition();
+        // Special effects for explosive projectiles
+        if (proyectiles[i].type == EXPLOSIVE) {
+            // Add particle effect or explosion animation here
+        }
 
+        // Remove projectiles that are off screen
         if (pos.x < 0 || pos.x > 800) {
             proyectiles.erase(proyectiles.begin() + i);
-            velocidadesProyectiles.erase(velocidadesProyectiles.begin() + i);
         } else {
             i++;
         }
     }
-    relojProyectil.restart();
- }
+}
 
+void CuerpoDinamico::dibujarProyectiles(sf::RenderWindow& ventana) {
+    for (const auto& proyectil : proyectiles) {
+        ventana.draw(proyectil.shape);
+    }
+}
+
+void CuerpoDinamico::checkProjectileCollisions(sf::FloatRect targetBounds) {
+    for (size_t i = 0; i < proyectiles.size();) {
+        if (proyectiles[i].shape.getGlobalBounds().intersects(targetBounds)) {
+            // Handle collision based on projectile type
+            switch(proyectiles[i].type) {
+                case EXPLOSIVE:
+                    // Add explosion effect here
+                    std::cout << "Explosive hit! Damage: " << proyectiles[i].damage << std::endl;
+                    break;
+                case RAPID:
+                    std::cout << "Rapid hit! Damage: " << proyectiles[i].damage << std::endl;
+                    break;
+                case NORMAL:
+                default:
+                    std::cout << "Normal hit! Damage: " << proyectiles[i].damage << std::endl;
+                    break;
+            }
+            
+            // Remove the projectile after collision
+            proyectiles.erase(proyectiles.begin() + i);
+        } else {
+            i++;
+        }
+    }
+}
 
 
 void CuerpoDinamico::controlarMovimiento(float fuerza, float fuerzaSalto, bool& enElSuelo, bool& mirandoALaDerecha, float ajusteAltura, float limiteIzquierda, float limiteDerecha) {
@@ -133,7 +170,7 @@ void CuerpoDinamico::controlarMovimiento(float fuerza, float fuerzaSalto, bool& 
     }
 
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)){
-        disparar();
+        disparar(NORMAL);
     }
 
     // Detener la velocidad horizontal del cuerpo cuando no se presiona ninguna tecla de movimiento

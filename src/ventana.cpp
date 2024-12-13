@@ -1,12 +1,12 @@
 #include "Ventana.hpp"
 #include <iostream>
 
-Ventana::Ventana(int width, int height, const std::string& title) :
-    window(sf::VideoMode(width, height), title)
-    deltaTime(0.0f);
+Ventana::Ventana(int width, int height, const std::string& title)
+    : deltaTime(0.0f)
     {
-    timePerFrame = sf::seconds(1.f / 60.f);
-}
+    window.create(sf::VideoMode(width, height), title);
+    window.setFramerateLimit(60);
+    }
 
 float Ventana::getDeltaTime(){
     return gameClock.restart().asSeconds();

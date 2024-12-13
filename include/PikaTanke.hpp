@@ -4,7 +4,19 @@
 #include <SFML/Graphics.hpp>
 #include <box2d/box2d.h>
 #include <iostream>
-#include "Proyectil.hpp"
+
+enum ProjectileType {
+    NORMAL,
+    EXPLOSIVE,
+    RAPID
+};
+
+struct Projectile {
+    sf::CircleShape shape;
+    sf::Vector2f velocity;
+    float damage;
+    ProjectileType type;
+};
 
 class CuerpoDinamico {
 public:
@@ -15,23 +27,21 @@ public:
     b2Body* obtenerCuerpo();
     void controlarMovimiento(float fuerza, float fuerzaSalto, bool& enElSuelo, bool& mirandoALaDerecha, float ajusteAltura, float limiteIzquierda, float limiteDerecha);
 
-    //Disparar
-    void disparar();
+    // Shooting system
+    void disparar(ProjectileType tipo = NORMAL);
     void actualizarProyectiles();
     void dibujarProyectiles(sf::RenderWindow& ventana);
+    void checkProjectileCollisions(sf::FloatRect targetBounds); // For enemy collision
 
 private:
     b2Body* cuerpo;
     sf::Texture textura;
     sf::Sprite sprite;
 
-    std::vector<sf::CircleShape> proyectiles;
-    std::vector<sf::Vector2f> velocidadesProyectiles;
-    float tiempoEntreDisparos = 0.5f; //segundos entre disparos
-    sf::Clock relojDisparo;
+    std::vector<Projectile> proyectiles;
+    int frameSinceLastShot = 0;
+    const int framesPerShot = 15;
     bool mirandoALaDerecha = true;
-    sf::Clock relojProyectil;
-    float tiempoEntreFrames = 60.f;
 };
 
 #endif // PIKATANKE_HPP
